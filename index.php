@@ -173,7 +173,7 @@ if(count($data['data']) > 0){?>
             <th>Bathrooms</th>
             <th>Price</th>
             <th>Type</th>
-            <th>Property type</th>
+            <th>Property Type</th>
         </tr>   
         </thead> 
         <tbody>
