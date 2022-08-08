@@ -1,0 +1,26 @@
+
+Get Composer
+https://getcomposer.org/
+
+use install composer to get all dependencies
+--
+
+Guzzle
+Installation
+https://docs.guzzlephp.org/en/stable/overview.html#installation
+
+----
+Database
+You will find database in db folder
+
+----
+Links for Running the Project
+Property Listing
+http://localhost/backend_trial/index.php
+
+For Importing data from API
+http://localhost/backend_trial/property.php?import_data=yes
+
+
+
+

@@ -58,85 +58,100 @@ $data = $obj_api->getAllData($pagination , $filter);
 	<div class="row">
     <div class="col-md-12">
     <h4>Properties Listing</h4>
-<div>
-    <form action="backend_trial/index.php" method="GET" >
+<div class="container">
+
+    <form action="<?= BASE_URL ?>index.php" method="GET" >
+    <div class="row">        
+        <div class="col-md-2">
+            <div class="form-group">
+                <input type="text" name="town" id="town" placeholder="Enter Town"  class="form-control"  value="<?= ( isset($_GET['town']) ? $_GET['town'] : "") ?>" />
+            </div>
+        </div>
+
+    
         
-        <span>
-            <input type="text" name="town" id="town" placeholder="Enter Town"  value="<?= ( isset($_GET['town']) ? $_GET['town'] : "") ?>" />
-        </span>
+        <div class="col-md-2">
+            <div class="form-group">
+                <select name="bedrooms" id="bedrooms" class="form-control" >
+                    <option value="">Bedrooms</option>
+                    <?php
+                    for($i=0;$i<21;$i++){
+                    ?>
+                        <option value="<?php echo $i; ?>" 
+                            <?php
+                                if( isset($_GET['bedrooms']) && ($_GET['bedrooms'] == $i) ) {
+                                    echo " selected ";
+                                }
+                            ?>
+                        ><?php echo $i; ?></option>
+                    <?php
+                    }
+                    ?>
+                </select>
+                </div>
+            </div>
         
-        <span>
-            <select name="bedrooms" id="bedrooms">
-                <option value="">Bedrooms</option>
-                <?php
-                for($i=0;$i<21;$i++){
-                ?>
-                    <option value="<?php echo $i; ?>" 
+            <div class="col-md-2">
+                <div class="form-group">
+                    <b>Price Range:</b>
+            
+                        <input type="text" name="price_from" id="price_from" placeholder="From"  class="form-control"  value="<?= ( isset($_GET['price_from']) ? $_GET['price_from'] : "") ?>" />
+                        <input type="text" name="price_to" id="price_to" placeholder="To"  class="form-control"  value="<?= ( isset($_GET['price_to']) ? $_GET['price_to'] : "") ?>" />
+            
+                </div>
+            </div>
+        
+            <div class="col-md-2">
+                <div class="form-group">
+                    <select name="property_type" id="property_type" class="form-control" >
+                        <option value="">Property Type</option>
                         <?php
-                            if( isset($_GET['bedrooms']) && ($_GET['bedrooms'] == $i) ) {
+                        $data_property_types = $obj_api->getAllPropertytypes();
+                        for($i=0;$i<count($data_property_types);$i++){
+                        ?>
+                            <option value="<?php echo $data_property_types[$i]['type_id']; ?>"
+                            <?php
+                                if( isset($_GET['property_type']) && ($_GET['property_type'] == $data_property_types[$i]['type_id']) ) {
+                                    echo " selected ";
+                                }
+                            ?>
+                            ><?php echo $data_property_types[$i]['title']; ?></option>
+                        <?php
+                        }
+                        ?>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <div class="form-group">
+                    <select name="type" id="type" class="form-control" >
+                        <option value="">Type</option>
+                        <option value="Sale"
+                        <?php
+                            if( isset($_GET['type']) && ($_GET['type'] == "Sale") ) {
                                 echo " selected ";
                             }
                         ?>
-                    ><?php echo $i; ?></option>
-                <?php
-                }
-                ?>
-            </select>
-        </span>
-        
-        <span>
-            <b>Price Range:</b>
-            <span>
-                <input type="text" name="price_from" id="price_from" placeholder="From"  value="<?= ( isset($_GET['price_from']) ? $_GET['price_from'] : "") ?>" />
-            </span>
-            <span>
-                <input type="text" name="price_to" id="price_to" placeholder="To"  value="<?= ( isset($_GET['price_to']) ? $_GET['price_to'] : "") ?>" />
-            </span>
-        </span>
-        
-        <span>
-        <select name="property_type" id="property_type">
-                <option value="">Property Type</option>
-                <?php
-                $data_property_types = $obj_api->getAllPropertytypes();
-                for($i=0;$i<count($data_property_types);$i++){
-                ?>
-                    <option value="<?php echo $data_property_types[$i]['type_id']; ?>"
-                    <?php
-                        if( isset($_GET['property_type']) && ($_GET['property_type'] == $data_property_types[$i]['type_id']) ) {
-                            echo " selected ";
-                        }
-                    ?>
-                    ><?php echo $data_property_types[$i]['title']; ?></option>
-                <?php
-                }
-                ?>
-            </select>
-        </span>
+                        >Sale</option>
+                        <option value="Rent"
+                        <?php
+                            if( isset($_GET['type']) && ($_GET['type'] == "Rent") ) {
+                                echo " selected ";
+                            }
+                        ?>
+                        >Rent</option>
+                        
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <input type="submit" name="btn_sub" id="btn_sub" value="Submit"  class="form-control" />
+                </div>
+            </div>
 
-        <span>
-        <select name="type" id="type">
-                <option value="">Type</option>
-                <option value="Sale"
-                <?php
-                    if( isset($_GET['type']) && ($_GET['type'] == "Sale") ) {
-                        echo " selected ";
-                    }
-                ?>
-                >Sale</option>
-                <option value="Rent"
-                <?php
-                    if( isset($_GET['type']) && ($_GET['type'] == "Rent") ) {
-                        echo " selected ";
-                    }
-                ?>
-                >Rent</option>
-                
-            </select>
-        </span>
-        <span>
-                <input type="submit" name="btn_sub" id="btn_sub" value="Submit" />
-        </span>
+            </div>
     </form>
     
 </div>
@@ -197,11 +212,11 @@ if(count($data['data']) > 0){?>
 for($page = 1; $page <= $data['number_of_pages']; $page++) {
     if(isset($_GET['btn_sub']) && ($_GET['btn_sub'] == "Submit") ){
     ?>    
-    <li><a href="backend_trial/index.php?page=<?= $page ?>&town=<?= $_GET['town'] ?>&bedrooms=<?= $_GET['bedrooms'] ?>&price_from=<?= $_GET['price_from'] ?>&price_to=<?= $_GET['price_to']?>&property_type=<?= $_GET['property_type'] ?>&type=<?= $_GET['type'] ?>&btn_sub=Submit"><?= $page ?> </a></li>
+    <li><a href="<?= BASE_URL ?>index.php?page=<?= $page ?>&town=<?= $_GET['town'] ?>&bedrooms=<?= $_GET['bedrooms'] ?>&price_from=<?= $_GET['price_from'] ?>&price_to=<?= $_GET['price_to']?>&property_type=<?= $_GET['property_type'] ?>&type=<?= $_GET['type'] ?>&btn_sub=Submit"><?= $page ?> </a></li>
     <?php
     }  else {
     ?>
-        <li><a href = "backend_trial/index.php?page=<?= $page ?>"><?=  $page ?> </a></li> 
+        <li><a href = "<?= BASE_URL ?>index.php?page=<?= $page ?>"><?=  $page ?> </a></li> 
     <?php
     }   
 }  
