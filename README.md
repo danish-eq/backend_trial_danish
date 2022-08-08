@@ -16,13 +16,14 @@ https://docs.guzzlephp.org/en/stable/overview.html#installation
 You will find database in db folder
 
 ----
+
 <h2>Links for Running the Project</h2>
 Property Listing
 
 http://localhost/backend_trial/index.php
 
 
-For Importing data from API
+<h2>For Importing data from API</h2>
 http://localhost/backend_trial/property.php?import_data=yes
 --
 
